@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+.input-item{ border:1px solid #d9dfd5; border-width:1px 0; margin-top:30px; padding: 0 0 0 25px; background:#fff;}
+.input-item-list{ position: relative; padding: 15px 0; border-bottom:1px solid #e7e7e7 }
+.input-item-list:last-child{ border:none;}
+.icon-username, .icon-password { display: block; position: absolute; top: 20px; left: 0; width: 18px; height: 20px; }
+.icon-username { background: url(http://img02.yiguo.com/e/web/150623/00781/173832/icon_username.png) no-repeat; background-size:100% 100%; }
+.icon-password { background: url(http://img02.yiguo.com/e/web/150623/00781/173832/icon_password.png) no-repeat; background-size:100% 100%; }
+.input-item-list input{ display: block; width: 100%; height: 30px; font-size:16px; border: none; background: none; }
+.username input, .password input {padding: 0 0 0 30px;}
+.automatic_login{margin:15px 15px 0 15px;font-size:14px; color:#a0a0a0;}
+.automatic_login input{margin:0 5px 0 0;}
+.btn-login{margin:30px 25px 0; text-align:center;}
+.btn-login button{ display:inline-block; width:45%; height:40px; border:none; border-radius: 4px; font-size:16px;}
+.btn-login .btn_green{color:#fff; background:#51c200;}
+.btn-login .btn_white{border:1px solid #ccc; color:#51c200; background:#fff;}
+.login-option{margin:15px 30px 0 30px;}
+.login-option a{ color:#299d1a; font-size:15px;}
+.retrieve_password{ float:left; width:45%; text-align:left;}
+.register{ float:right; width:45%; text-align:right;}
+.login-other{margin:45px 0 0 0;}
+.login-other dt{ font-size:15px; padding-bottom:20px; text-align:center; color:#a0a0a0;}
+.login-other a{display:block;overflow: hidden; float:left; width:50%; height:55px; text-indent: -9999px;}
+.login-other .qq{ background:url(../images/login-qq.png) no-repeat center; background-size: auto 100%}
+.login-other .weibo{ background:url(../images/login-weibo.png) no-repeat center; background-size: auto 100%}
+
+.btn-captcha{position: absolute; top: 15px; right: 15px; width:85px; height:30px; line-height:30px; text-align:center; color:#fff; border-radius: 4px; font-size:14px; background:#51c200;}
+
+/*清除浮动*/
+.login-option:after, .login-other:after { content: "."; display: block; height: 0; clear: both; visibility: hidden}
+
+.codewrap .btn_green,.codewrap .btn_green:hover{ width:100px; color: #fff;background-color: #51c200;border-color: #51c200; display:inline-block; line-height:30px; border-radius:3px;}
+.inputtxt{ width:100px; height:30px; line-height:30px; border:solid 1px #ccc; text-align:center;}
+.yzcode{ height:30px; margin-left:5px;}

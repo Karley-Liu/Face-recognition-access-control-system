@@ -1,0 +1,28 @@
+﻿@charset "utf-8";
+/* CSS Document */
+body { background-color: #ffffff; }
+.catalog-list{}
+.first_catalog{ position:relative; padding:15px; border-bottom:1px solid #e1e5e5;}
+.first_catalog .icon{ display: block; float: left;overflow:hidden; width:48px; height:48px; margin-right:10px; text-indent:-9999px; 
+                      background:url("../images/icon-catalog.png") no-repeat; background-size:192px 96px;}
+.first_catalog.catg01 .icon{ background-position:0 0;}
+.first_catalog.catg02 .icon{ background-position:-48px 0;}
+.first_catalog.catg03 .icon{ background-position:-96px 0;}
+.first_catalog.catg04 .icon{ background-position:-144px 0;}
+.first_catalog.catg05 .icon{ background-position:0 -48px;}
+.first_catalog.catg06 .icon{ background-position:-48px -48px;}
+.first_catalog.catg07 .icon{ background-position:-96px -48px;}
+.first_catalog.catg08 .icon{ background-position:-144px -48px;}
+.first_catalog .title{ margin-left: 50px; padding-top:4px;}
+.first_catalog h1{ font-size:14px; color:#000; line-height:1.5em;}
+.first_catalog h2{ font-size:12px; color:#8d8a8a; line-height:1.5em;}
+.first_catalog h2 span:after{ content: "/"; margin: auto 4px;}
+.first_catalog h2 span.last:after{ content: ""}
+.first_catalog .arrow{ overflow: hidden; position: absolute; right: 15px; top: 50%; width: 11px; height: 18px; margin-top: -9px; text-indent: -999px; background-position: -47px 0; }
+.second_catalog{ display:none; margin:0; padding:0; }
+.second_catalog li{ display:table; width:100%; list-style: none;border-bottom:1px solid #e1e5e5}
+.second_catalog li a{ display:table-cell; width:33%; padding:7px 15px; color:#000; font-size:13px;line-height:26px}
+.catalog-list.current .second_catalog{ display:block;}
+.catalog-list.current .arrow{transform:rotate(90deg);
+-webkit-transform:rotate(90deg);
+filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);}

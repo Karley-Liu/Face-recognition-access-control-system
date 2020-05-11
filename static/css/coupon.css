@@ -1,0 +1,47 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+.coupon-code { position: relative; border-bottom: 1px solid #ccc; }
+.coupon-code-box { overflow: hidden; position: relativel; width: 80%; padding: 5px 0 5px 15px; }
+.coupon-code .icon-code { overflow: hidden; position: absolute; top: 12px; left: 30px; width: 21px; height: 21px; text-indent: -999px; background-position: 0 -28px; }
+.coupon-code .code-input { background: #eef5e9; border-radius: 20px; line-height: 35px; font-size: 14px; height: 35px; padding: 0 20px; width: 100%; border: none; }
+.coupon-code .btn-code { position: absolute; top: 0; right: 0; height: 44px; line-height: 44px; }
+.coupon-code .btn-code a { display: block; width: 100%; height: 100%; padding-right: 15px; color: #a1bc8e; font-size: 14px; }
+
+.coupon{ padding:0 10px;}
+.coupon-item a,.gift-item a{ display:block; padding:15px 15px 17px 15px; margin:15px auto 0 auto; background:url(../images/bg-coupon2.png) no-repeat; background-size:100% 100% ;}
+.coupon-box,.gift-box{ display:table; width:100%; border-radius:6px; border:1px solid #4b94d1;font-size:12px;}
+.gift-box{ border:1px solid #8bc75f; }
+.coupon-box .left,.coupon-box .right,.gift-box .left,.gift-box .right{ display:table-cell; vertical-align:middle;}
+.coupon-box .left,.gift-box .left{ width:70px; text-align:center; color:#fff; background:#4b94d1;}
+.gift-box .left{ background:#8bc75f;}
+.coupon-box .left span,.gift-box .left span{ display:block; font-size:25px;}
+.coupon-box .right,.gift-box .right{ padding:5px; color:#333;height:107px; text-align:center; vertical-align:middle; position:relative; padding-top:23px;}
+.coupon-box .right .timewrap,.gift-box .right .timewrap{ white-space: nowrap;display:block; color:#8d8a8a; padding:3px 5px; margin-bottom:5px; border-bottom:1px dashed #8d8a8a; position:absolute; top:0; left:0; width:100%;}
+.coupon-box .timewrap span,.gift-box .timewrap span{ position:relative; display:block;}
+.coupon-box .time,.gift-box .time{ display:inline-block; position:absolute; right:0; top:0;}
+.coupon-box .ma,.gift-box .ma{ display:block;overflow:hidden; padding-right:80px; text-align:left; widh:100%; height:16px; white-space:normal;　word-break:break-all;word-wrap:break-word;}
+.coupon-box .right span em, .gift-box .right span em{ font-style:normal; font-size:11px;}
+
+.modal-header{padding:5px 15px; color:#8d8a8a; height:35px; }
+.modal-content .close{  font-size: 22px;}
+.modal-title{line-height:25px}
+.select-goods { padding:10px 15px 0 15px;}
+.select-goods label{ display:block; margin-bottom:10px;}
+.select-goods input{ margin:0 10px 0 0; vertical-align:middle;}
+.modal-footer{  text-align:center; border-top: 0;  padding:15px; margin:0;}
+.modal-footer .btn{ width:100px; color: #fff;background-color: #51c200;border-color: #51c200;}
+
+/* -------add by juliaguo 20150716------------ */
+.icon_radio{  background:url("../images/icon_radio.png") no-repeat scroll 0 0 / 18px 36px rgba(0, 0, 0, 0);display:inline-block;
+              text-indent:-1999em; overflow:hidden; vertical-align:middle; width:18px; height:18px;  margin-right:2px; background-position:0 -18px;}
+              
+.icon_radio_checked{ background-position:0 0;}   
+
+.icon_sign{  background:url("../images/sign.png") no-repeat scroll 0 0 / 56px 112px rgba(0, 0, 0, 0);display:inline-block;
+              text-indent:-1999em; overflow:hidden; vertical-align:middle; width:56px; height:56px; position:absolute; right:0px; top:0px;}
+              
+.coupon-item .icon_sign{ background-position:0 -56px;}
+
+.quan_con{ padding:0 10px; min-height:100px;}
+  

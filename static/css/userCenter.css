@@ -1,0 +1,31 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+/*.userCenter{ background:url(../images/bg-usercenter.png) no-repeat 0 170px; background-size: 100%;}*/
+body { background-color: #ffffff; }
+.user-info{ text-align:center;}
+.u-pic { position: relative; width: 130px; height: 130px; padding:20px; margin:0 auto; z-index: 2; overflow: hidden; text-align: center }
+.u-pic img{ width:90px;}
+.u-pic .mask { background: url(../images/myyg-bg.png) no-repeat 0 0; background-size:130px; width: 130px; height: 130px; position: absolute; left: 0; top: 0; z-index: 2 }
+.u-name{}
+.u-name .name{color:#299d1a; font-size:14px; font-weight:bold;}
+.u-name .vip{ margin-top:5px; font-size:12px;}
+.u-account{ display:table; margin:15px auto 0; width:250px;}
+.u-account span{ display:table-cell; width:50%; color:#51c200; font-size:12px;}
+.u-account span.yb{ text-align:center; }
+.u-account span.balance{ text-align:center;}
+.u-account span strong{ color:#299d1a; font-size:12px;}
+.user-list{ width:285px; margin:40px auto 0 auto; }
+.user-list a{ display:block; float:left; width: 65px; margin:0 15px 10px; color:#666; text-align:center; font-size:12px; position:relative;}
+.user-list a span{ display:block; width: 48px; height:48px; margin:7px 7px 5px; background:url(../images/icon-UserCenter.png) no-repeat; background-size:192px 48px; text-indent:-999px; overflow: hidden;}
+.user-list-icon01 span{ background-position:0 0 !important;}
+.user-list-icon02 span{ background-position:-48px 0 !important;}
+.user-list-icon03 span{ background-position:-96px 0 !important;}
+.user-list-icon04 span{ background-position:-144px 0 !important;}
+
+.btn-logout{ margin-top:30px;}
+.btn-logout a{ display:block; width:100px; height:35px; line-height:35px; margin:0 auto; text-align:center; border:1px solid #ccc; border-radius:5px; color:#51c200; background:#fff;}
+
+.user-list .badge{ background-color:#ff0000; left:auto; right:3px; top:2px;}
+
+

@@ -1,0 +1,140 @@
+{% load static %}
+<html class="hb-loaded">
+ <head> 
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" /> 
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /> 
+  <meta content="yes" name="apple-mobile-web-app-capable" /> 
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
+  <title>用户登录</title> 
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/public.css' %}" />
+ 
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/ygop.ajax.client.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/layer.css' %}" />
+  <script src="{% static 'js/layer.m.js' %}"></script>
+  <script src="{% static 'js/Common.js' %}"></script>
+
+
+
+
+ </head> 
+ <body> 
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <!--header>
+    <div class="header">
+        <a class="backBtn" href="javascript:void(0)"><span>返回</span></a>
+        <h1>用户登录</h1>
+    </div>
+</header--> 
+  <div class="wrap"> 
+   <form> 
+    <div class="input-item"> 
+     <div class="input-item-list username"> 
+      <span class="icon-username"></span> 
+      <input type="text" placeholder="请输入您的电话号码" id="username" name="truename"/>
+     </div> 
+     <div class="input-item-list password"> 
+      <span class="icon-password"></span> 
+      <input type="password" placeholder="请输入您的密码" id="password" name="pwd"/>
+     </div> 
+    </div> 
+    <!--div class="automatic_login">
+        <label>
+            <input type="checkbox">自动登录
+        </label>
+        </div--> 
+    <div class="btn-login clearfix"> 
+     <button onclick="goBack()" type="button" class="btn_white myleft">返回</button> 
+     <button class="btn_green myright" type="button" id="btnLogin">登录</button> 
+    </div> 
+    <div class="login-option"> 
+     <span class="retrieve_password"> <a href="forget.html">忘记密码</a> </span> 
+     <span class="register"> <a href="/users/register">新用户注册</a> </span>
+    </div> 
+    <div class="login-other"> 
+     <dl> 
+      <dt>
+       -----------&nbsp;第三方登录&nbsp;-----------
+      </dt> 
+      <dd> 
+       <a class="qq" href="\Account\QQLogin" id="btnQQLogin">QQ</a> 
+       <a class="weibo" href="\Account\WeiBoLogin" id="btnWeiBoLogin">新浪微博</a> 
+      </dd> 
+     </dl> 
+    </div> 
+   </form> 
+  </div> 
+  <script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnLogin").click(function () {
+            var user = {};
+            user.UserName = $("#username").val().trim();
+            user.Pwd = $("#password").val().trim();
+            if (user.UserName == "")
+            {
+                YgmJsCommon.popups.alert("电话号码不能为空！");
+                return;
+            }
+            if (user.Pwd == "") {
+                YgmJsCommon.popups.alert("密码不能为空！");
+                return;
+            }
+            function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                                // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+                var csrftoken = getCookie('csrftoken');
+                function csrfSafeMethod(method){
+                    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                }
+                $.ajaxSetup({
+                    crossDomain:false,
+                    beforeSend:function(xhr,settings){
+                        if(!csrfSafeMethod(settings.type)){
+                            xhr.setRequestHeader("X-CSRFToken",csrftoken);
+                        }
+                    }
+                });
+
+            $("#btnLogin").text("正在处理中..").attr("disabled", "disabled");
+            ygopAjaxClient.async("/users/login/", "post", user, function (res) {
+                console.log(res)
+                $("#btnLogin").text("登录").removeAttr("disabled");
+                if (res.RspCode == 1) {
+                   YgmJsCommon.popups.alert(res.res, function () {
+                       if(true){
+                           location.href = "/users/member_index";
+                       }
+                    });
+                }
+                else if (res.RspCode == 2)
+                {
+{#                    dplus.track("未激活");#}
+                    YgmJsCommon.popups.alert(res.res);
+                }
+                else {
+                    YgmJsCommon.popups.alert(res.res);
+                }
+            });
+        });
+    });
+
+    function goBack() {
+        history.go(-1);
+    }
+</script> 
+ </body>
+</html>

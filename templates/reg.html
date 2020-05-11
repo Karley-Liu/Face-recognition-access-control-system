@@ -1,0 +1,351 @@
+{% load static %}
+<html class="hb-loaded">
+ <head> 
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" /> 
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /> 
+  <meta content="yes" name="apple-mobile-web-app-capable" /> 
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
+  <title>用户注册</title> 
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/public.css' %}" />
+ 
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/ygop.ajax.client.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/layer.css' %}" />
+  <script src="{% static 'js/layer.m.js' %}"></script>
+  <script src="{% static 'js/Common.js' %}"></script>
+
+
+
+
+ </head> 
+ <body> 
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  <style type="text/css">
+    .gray {
+        width:110px;
+        background:#808080;
+    }
+</style> 
+  <!--header>
+    <div class="header">
+        <a class="backBtn" href="javascript:void(0)"><span>返回</span></a>
+        <h1>用户注册</h1>
+    </div>
+</header-->
+  <div class="wrap"> 
+   <form id="register" action="">
+       {% csrf_token %}
+    <div class="input-item">
+        <div class="input-item-list">
+            <input type="text" placeholder="请输入您的真名" name="truename" id="txtName">
+        </div>
+     <div class="input-item-list"> 
+      <input type="tel" placeholder="请输入您的手机号" name="phone" id="txtMobile" />
+{#      <a href="javascript:void(0)" class="btn-captcha" id="btnSendSms">获取验证码</a> #}
+     </div> 
+{#     <div class="input-item-list"> #}
+{#      <input type="text" placeholder="请输入您的验证码" id="txtVCode" /> #}
+{#     </div> #}
+     <div class="input-item-list"> 
+      <input type="password" placeholder="请设定您的密码" name="pwd" id="txtPwd" />
+     </div> 
+     <div class="input-item-list"> 
+      <input type="password" placeholder="请再次输入您的密码" id="txtRepeatPwd" /> 
+     </div>
+        <div class="input-item-list">
+            <input type="text" placeholder="请输入您的门牌号" name="house_number" id="txthousenumber">
+        </div>
+    </div> 
+    <div class="btn-login"> 
+     <button onclick="goBack()" type="button" class="btn_white myleft">返回</button> 
+     <button class="btn_green myright" type="button" id="btnRegister">注册</button> 
+    </div> 
+   </form> 
+  </div> 
+{#  <div aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="delivery-date" class="modal"> #}
+{#   <div role="document" class="modal-dialog"> #}
+{#    <div class="modal-content"> #}
+{#     <div class="modal-header"> #}
+{#      <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">&times;</span></button> #}
+{#      <span id="myModalLabel" class="modal-title">请输入图片上的验证码</span> #}
+{#     </div> #}
+{#     <div class="codewrap"> #}
+{#      <p class=" tc mt15"><input type="text" placeholder="请输入验证码" id="J_IdentifyCode" class="inputtxt" /> <img id="J_codePhoto" class="yzcode" src="/Ajax/VCodePic.ashx?r=130902389874654413" /> </p> #}
+{#      <p class=" tc mt15"> <a id="btnSumitVCode" class="btn_green">提交</a></p> #}
+{#     </div> #}
+{#    </div> #}
+{#   </div> #}
+{#  </div> #}
+  <script type="text/javascript">
+    var firstInPutVCode = true;//默认true表示第一次输入验证码，大于1次的为false需要弹出验证码
+    $(document).ready(function () {
+        $("#btnSendSms").click(function () {
+            firstInPutVCode = true;
+            var mobile = $.trim($("#txtMobile").val());
+            if (mobile == "") {
+                YgmJsCommon.popups.alert("手机号不能为空！", function () {
+                    $("#txtMobile").focus();
+                });
+                return;
+            }
+            if (!(/^1[3-8][0-9]\d{4,8}$/.test(mobile))) {
+                YgmJsCommon.popups.alert("您输入的手机号有误！", function () {
+                    $("#txtMobile").focus();
+                });
+                return;
+            }
+
+            //调用服务端接口设置firstInPutVCode
+            if ($("#btnSendSms").attr("class").indexOf("gray") == -1) {
+                ygopAjaxClient.async("/Account/GetTodaySendSmsCount", "post", { "mobile": mobile, "ESmsType": 1 }, function (e) {
+                    var rspcode = e.RspCode;
+                    if (rspcode == 10 && $("#btnSendSms").attr("class").indexOf("gray") == -1) {//表示发送短信超过0条
+                        firstInPutVCode = false;
+                        $("#J_IdentifyCode").val("");
+                        $("#J_codePhoto").attr("src", "/Ajax/VCodePic.ashx?r=" + new Date());
+                        $('#delivery-date').modal('show');
+                    }
+                    else if (rspcode == -1) {
+                        YgmJsCommon.popups.alert(e.RspMsg);
+                    }
+                    else {
+                        sendVerifyCode("btnSendSms");
+                    }
+                });
+            }
+
+        });
+
+        $("#btnSumitVCode").click(function () {
+            sendVerifyCode("btnSendSms");
+        });
+
+        $("#btnRegister").click(function () {
+            register();
+        });
+    });
+
+    //注册操作
+    function register() {
+{#        var formdata=new FormData($("#signup")[0]);#}
+{#        console.log(formdata)#}
+        var truename = $.trim($("#txtName").val());
+        if (truename == "") {
+            YgmJsCommon.popups.alert("姓名不能为空！", function () {
+                $("#txtName").focus();
+            });
+            return;
+        }
+        var mobile = $.trim($("#txtMobile").val());
+        if (mobile == "") {
+            YgmJsCommon.popups.alert("手机号不能为空！", function () {
+                $("#txtMobile").focus();
+            });
+            return;
+        }
+        if (!(/^1[3-8][0-9]\d{4,8}$/.test(mobile))) {
+            YgmJsCommon.popups.alert("您输入的手机号有误！", function () {
+                $("#txtMobile").focus();
+            });
+            return;
+        }
+{#        var checkCode = $.trim($("#txtVCode").val());#}
+{#        if (checkCode == "") {#}
+{#            YgmJsCommon.popups.alert("验证码不能为空！", function () {#}
+{#                $("#txtVCode").focus();#}
+{#            });#}
+{#            return;#}
+{#        }#}
+        var pwd = $.trim($("#txtPwd").val());
+        if (pwd == "") {
+            YgmJsCommon.popups.alert("密码不能为空！", function () {
+                $("#txtPwd").focus();
+            });
+            return;
+        }
+        if (pwd.length < 6 || pwd.length > 16) {
+            YgmJsCommon.popups.alert("密码应为6-16个英文字母、数字符号！", function () {
+                $("#txtPwd").focus();
+            });
+            return;
+        }
+        var retpwd = $.trim($("#txtRepeatPwd").val());
+        if (retpwd == "") {
+            YgmJsCommon.popups.alert("重复密码不能为空！", function () {
+                $("#txtRepeatPwd").focus();
+            });
+            return;
+        }
+        if (pwd != retpwd) {
+            YgmJsCommon.popups.alert("两次输入密码不相同！", function () {
+                $("#txtRetPwd").focus();
+            });
+            return;
+        }
+        var house_number = $.trim($("#txthousenumber").val());
+        if (house_number == "") {
+            YgmJsCommon.popups.alert("门牌号不能为空！", function () {
+                $("#txthousenumber").focus();
+            });
+            return;
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                                // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method){
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            crossDomain:false,
+            beforeSend:function(xhr,settings){
+                if(!csrfSafeMethod(settings.type)){
+                    xhr.setRequestHeader("X-CSRFToken",csrftoken);
+                }
+            }
+        });
+{#        var csrf_token = $('meta[name="csrf-token"]').attr('content');#}
+{#        var formdata=new FormData($("#register")[0]);#}
+{#        var formdata=$("#register").serializeArray();#}
+        $.ajax({
+            url:'/users/register/',
+            cache:false,
+            dataType:"json",
+            type:'POST',
+            data:{
+                truename:truename,
+                phone:mobile,
+                pwd:pwd,
+                house_number:house_number
+            },
+            async:false,
+{#            processData:false,#}
+{#            contentType:false,#}
+{#            headers:{#}
+{#                'X-CSRF-TOKEN': csrf_token#}
+{#            },#}
+            success:function(res){
+{#                console.log(res.res);#}
+                YgmJsCommon.popups.alert(res.res,function(){
+                    if (true){
+                       window.location.href="/users/login";
+                    }
+                });
+
+            },
+            error:function(res){
+
+            }
+        })
+{#        var user = {};#}
+{#        user.UserName = mobile;#}
+{#        user.Mobile = mobile;#}
+{#        user.Pwd = pwd;#}
+{#        user.RepeatPwd = retpwd;#}
+{#        user.VCode = checkCode;#}
+{#        $("#btnRegister").text("正在处理中..").attr("disabled", "disabled");#}
+{#        ygopAjaxClient.async("/Account/YgUserRegister", "post", user, function (e) {#}
+{#            $("#btnRegister").text("提交").removeAttr("disabled");#}
+{#            var rspcode = e.RspCode;#}
+{#            if (rspcode == 1) {#}
+{#                dplus.track("注册");#}
+{#                YgmJsCommon.popups.alert(e.RspMsg, function () {#}
+{#                    location.href = e.RspData.returnUrl;#}
+{#                });#}
+{#            }#}
+{#            else {#}
+{#                YgmJsCommon.popups.alert(e.RspMsg);#}
+{#            }#}
+{#        });#}
+    }
+
+    //发送验证码操作
+    //重新发送验证码
+    var timer;
+    var count = 30;
+    function sendVerifyCode(btnId) {
+        var mobile = $.trim($("#txtMobile").val());
+        if (mobile == "") {
+            YgmJsCommon.popups.alert("手机号不能为空！", function () {
+                $("#txtMobile").focus();
+            });
+            return;
+        }
+        if (!(/^1[3-8][0-9]\d{4,8}$/.test(mobile))) {
+            YgmJsCommon.popups.alert("您输入的手机号有误！", function () {
+                $("#txtMobile").focus();
+            });
+            return;
+        }
+
+        var authCode = $.trim($("#J_IdentifyCode").val());
+        if (!firstInPutVCode && authCode == "") {
+            YgmJsCommon.popups.alert("验证码不能为空！", function () {
+                $("#J_IdentifyCode").focus();
+            });
+            return;
+        }
+
+        if ($("#" + btnId).attr("disabled") == "disabled") {
+            return;
+        }
+        if (timer) {
+            count = 30;
+            clearInterval(timer);
+        }
+
+        $.ajax({
+            url: "/Account/SendVCode",
+            type: "post",
+            data: { "mobile": mobile, "AuthCode": authCode},
+            beforeSend: function () {
+                $("#" + btnId).text(count + "秒后重新发送").addClass("gray").attr("disabled", "disabled");
+            },
+            success: function (data) {
+                var e = $.parseJSON(data);
+                if (e.RspCode == 1) {
+                    $('#delivery-date').modal('hide');
+                    dplus.track("短信", { SmsType: "注册" });
+                    timer = setInterval(function () {
+                        if (count == 0) {
+                            clearInterval(timer);
+                            $("#" + btnId).text("重新发送").removeAttr("disabled").removeClass("gray");
+                        }
+                        else {
+                            count--;
+                            $("#" + btnId).text(count + "秒后重新发送").addClass("gray").attr("disabled", "disabled");
+                        }
+                    }, 1000);
+                }
+                else {
+                    $("#" + btnId).text("重新发送").removeAttr("disabled").removeClass("gray");
+                    YgmJsCommon.popups.alert(e.RspMsg);
+                }
+            },
+            complete: function (e) {
+                $("#" + btnId).removeAttr("disabled");
+            }
+        });
+    }
+
+    function goBack() {
+        history.go(-1);
+    }
+</script> 
+ </body>
+</html>

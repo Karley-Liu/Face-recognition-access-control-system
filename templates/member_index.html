@@ -1,0 +1,277 @@
+{% load static %}
+<html class="hb-loaded">
+ <head> 
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" /> 
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" /> 
+  <meta content="yes" name="apple-mobile-web-app-capable" /> 
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" /> 
+  <meta content="telephone=no" name="format-detection" /> 
+  <meta content="email=no" name="format-detection" /> 
+  <title>个人中心 - 小区门禁系统</title>
+ 
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/public.v20150930.css' %}" />
+  <script src="{% static 'js/ygop.ajax.client.js' %}"></script>
+  <script src="{% static 'js/Common.v150812.js' %}"></script>
+  <script src="{% static 'js/layer.m.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/layer.css' %}" />
+  <script src="{% static 'js/jweixin-1.0.0.js' %}" type="text/javascript"></script>
+  <link rel="stylesheet" href="{% static 'css/gps.css' %}" />
+
+
+
+
+ </head> 
+ <body class="bgfaf"> 
+  <link rel="stylesheet" href="{% static 'css/userCenter.css' %}" />
+  <div class="wrap"> 
+   <div class="userCenter clearfix" id="userCenter"> 
+    <div class="user-info" id="userInfo"> 
+     <div class="u-pic">
+      <img src="{% static 'images/no-pic.jpg' %}" alt="用户头像" />
+      <div class="mask"></div>
+     </div>
+     <div class="u-name">
+      <div class="name">
+       业主 {{ request.session.username }}
+      </div>
+      <div class="vip">
+       普通业主
+      </div>
+     </div>
+     <div class="u-account">
+      <span class="yb">悠币：<strong>120</strong></span>
+      <span class="balance">余额：<strong>￥0</strong></span>
+     </div>
+    </div> 
+    <div class="user-list clearfix" id="userList"> 
+     <a href="/users/change" class="user-list-icon01"><span>修改信息</span>修改信息</a>
+     <a href="" id="storeFace" class="user-list-icon02"><span>人脸存储</span>人脸存储</a>
+{#         <font class="badge">无</font>#}
+     <a href="" class="user-list-icon03" id="face"><span>人脸识别</span>人脸识别</a>
+{#     <a href="member_pwd.html" class="user-list-icon04"><span>修改密码</span>修改密码</a> #}
+    </div> 
+    <div class="btn-logout">
+     <a onclick="clearCookie()">退出登录</a>
+    </div>
+   </div> 
+  </div> 
+  <script type="text/javascript">
+    var_link = "";
+    $(function () {
+        $("body").addClass("bgfaf");
+        $(".footer a").removeClass();
+        $(".footer #my").addClass("current");
+        _link = "";
+        //加载用户信息
+        getUserInfo();
+    $('#face').click(function(res){
+        $.ajax({
+            url:'/users/recognition',
+            cache:false,
+            dataType:"json",
+            type:'GET',
+            async:false,
+            success:function(res){
+{#                console.log(res.res);#}
+                console.log(res.res)
+                alert(res.res)
+{#                YgmJsCommon.popups.alert(res.res,function(){#}
+{#                    return;#}
+{#                });#}
+
+            },
+            error:function(res){
+
+            }
+        })
+    })
+        $('#storeFace').click(function(res){
+        $.ajax({
+            url:'/users/face',
+            cache:false,
+            dataType:"json",
+            type:'GET',
+            async:false,
+            success:function(res){
+                alert(res.res)
+            },
+            error:function(res){
+
+            }
+        })
+    })
+    })
+    //退出登录
+    function clearCookie() {
+        YgmJsCommon.popups.loading();
+        ygopAjaxClient.async("/users/logout", "get", null, function (e) {
+            YgmJsCommon.popups.close();
+            if (e.RspCode == 1) {
+                // 退出登录
+{#                dplus.track("退出登录");#}
+                YgmJsCommon.popups.alert(e.res, function () {
+                    if (true){
+                        location.href="/users/login";
+                    }
+                });
+            }
+        });
+    }
+
+    //获取用户信息
+    function getUserInfo() {
+//        YgmJsCommon.popups.loading();
+       
+    }
+
+    function clearCookie1() {
+        YgmJsCommon.clearCookie("ygm_user");
+        YgmJsCommon.clearCookie("ygm_cart");
+        YgmJsCommon.clearCookie("ygm_city");
+        YgmJsCommon.popups.loading();
+
+        ygopAjaxClient.async("/MyOpt/LogOut", "post", null, function (e) {
+            // YgmJsCommon.popups.close();
+            if (e.RspCode == 1) {
+                YgmJsCommon.popups.alert("清除Cookie成功！");
+            }
+        });
+    }
+</script> 
+  <footer class="footer"> 
+   <a class="" href="index.html" id="index"><span class="home">首页</span>首页</a> 
+   <a href="cat.html" id="category"><span class="catalog">分类</span>分类</a> 
+   <a href="cart.html" id="cart"> <span class="shopping">购物车<font id="fCartProductTotalCount" class="badge" style="display: none;"></font></span>购物车 </a> 
+   <a href="/users/member_index" id="my" class="current"><span class="my">业主中心</span>业主中心</a>
+  </footer> 
+  <div data-backdrop="static" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="divMyCity" class="modal" style="display: none;"> 
+   <div role="document" class="modal-dialog"> 
+    <div id="divCityContent" class="modal-content"> 
+     <div style=" display:block;" class="gpstips"> 
+      <a> <em class=" icon icon_gps"> </em> 亲，请先选择您的收货城市 <em class=" icon icon_arrowright"> </em> </a> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script type="text/javascript">
+        var _wx_JsConfig = {};
+        _wx_JsConfig.appid = "wx0d4f4f0e0bada80e";
+        _wx_JsConfig.imgUrl = "http://img02.yiguo.com/e/web/150930/00783/155744/wxlogo.jpg";
+        _wx_JsConfig.title = "易果生鲜触屏版";
+        _wx_JsConfig.content = "全国首家生鲜专业电商，全球优质生鲜产地直供，全年无休生鲜冷链配送";
+        _wx_JsConfig.timeLineLink = "http://weixin.m.yiguo.com";
+
+        _wx_JsConfig.timestamp = "";
+        _wx_JsConfig.nonceStr = "";
+        _wx_JsConfig.signature = "";
+
+        $(function () {
+            YgmJsCommon.domain = "yiguo.com";
+            var jsonWxCfg = decodeURIComponent("%7b%22appId%22%3anull%2c%22timestamp%22%3a%221445765451%22%2c%22nonceStr%22%3a%221309023905%22%2c%22signature%22%3a%22e6f1295a15c6b4ca10e3483e91373634f7a387e9%22%2c%22url%22%3a%22http%3a%2f%2fweixin.m.yiguo.com%2fmy%22%2c%22jsapi_ticket%22%3a%22bxLdikRXVbTPdHSM05e5u_n3yqdZ_9Pt0dvnbtzvrXZ2Bps91PjRajJdScVYkXWafhoi6zfSwxWok0rXn11cmQ%22%7d");
+            var wxJsCfg = JSON.parse(jsonWxCfg);
+            _wx_JsConfig.timestamp = wxJsCfg.timestamp;
+            _wx_JsConfig.nonceStr = wxJsCfg.nonceStr;
+            _wx_JsConfig.signature = wxJsCfg.signature;
+
+            wx.config({
+                //debug: true,
+                appId: _wx_JsConfig.appid,
+                timestamp: _wx_JsConfig.timestamp,
+                nonceStr: _wx_JsConfig.nonceStr,
+                signature: _wx_JsConfig.signature,
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ]
+            });
+
+            myShare();
+
+            getCartCount();
+
+            showSelectedCityDialog();
+        })
+
+        function myShare() {
+            wx.ready(function () {
+                //分享朋友圈
+                wx.onMenuShareTimeline({
+                    title: _wx_JsConfig.title,
+                    desc: _wx_JsConfig.content, // 分享描述
+                    link: _wx_JsConfig.timeLineLink,
+                    imgUrl: _wx_JsConfig.imgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+                        dplus.track("分享到朋友圈");
+                    },
+                    cancel: function (res) {
+                    },
+                    fail: function (res) {
+                    }
+                });
+                //分享朋友
+                wx.onMenuShareAppMessage({
+                    title: _wx_JsConfig.title,
+                    desc: _wx_JsConfig.content,
+                    link: _wx_JsConfig.timeLineLink,
+                    imgUrl: _wx_JsConfig.imgUrl,
+                    trigger: function (res) {
+                    },
+                    success: function (res) {
+                        dplus.track("分享给朋友");
+                    },
+                    cancel: function (res) {
+                    },
+                    fail: function (res) {
+                    }
+                });
+            });
+
+        }
+
+        //如果查询到CityCookie default=1，表示用户没有选择过城市，则需要弹出选择城市
+        function showSelectedCityDialog() {
+            var objCity = YgmJsCommon.getCityCookie();
+            if (objCity != null && objCity.Default == 1) {
+                $("#divMyCity").css('display', "");
+                $("#divMyCity").modal('show');
+                $("#divMyCity").click(function () {
+                    window.location.href = "/Home/SelectCity";
+                })
+            }
+            else {
+                $("#divMyCity").css('display', "none");
+            }
+        }
+
+        //返回商品数量显示在footer上
+        function getCartCount() {
+            var count = YgmJsCommon.getCartProductsTotalCount();
+            if (count > 0) {
+                $("#fCartProductTotalCount").css("display", "");
+                $("#fCartProductTotalCount").html(count);
+            }
+            else {
+                $("#fCartProductTotalCount").css("display", "none");
+            }
+            return count;
+        }
+
+        //设置云朵的位置
+        $('#divMyCity').on('shown.bs.modal', function () {
+            var win_width = $(this).find(".modal-dialog").width();
+            var win_height = $(this).find(".modal-dialog").height();
+            $(this).find(".modal-dialog").css({ "marginTop": String(-1 * win_height / 2) + "px", "marginLeft": String(-1 * win_width / 2) + "px" });
+
+        });
+
+        window.onload = function () {
+            
+        };
+    </script> 
+ </body>
+</html>

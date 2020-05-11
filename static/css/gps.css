@@ -1,0 +1,32 @@
+﻿@charset "utf-8";
+/* CSS Document */
+ *, *::before, *::after { box-sizing: border-box;}
+.gpslayout{ min-height:100%; background-color:#eef5e9; padding-bottom:10px; z-index:3010;}
+.gpslayout *{ font-size:12px;}
+.gpslayout .f10{ font-size:10px;}
+.gpslayout .tittle{ margin:0; padding:5px 10px; font-weight:normal; color:#888;}
+.gpslayout .hotul{ padding:5px 10px;}
+.gpslayout li{ width:33.3%; float:left; text-align:left; margin:5px 0;}
+.gpslayout li:nth-child(3n){ text-align:right;}
+.gpslayout li:nth-child(3n+2){ text-align:center;}
+.gpslayout li a{ display:inline-block; background-color:#fff; color:#000; border:solid 1px #fff;width:70px; padding:5px 0; }
+.gpslayout .hotul li a{border-radius:3px; border:solid 1px #ccc; text-align:center; }
+.gpslayout .hotul li.active a{ background-color:#51c200; color:#fff; border-color:#51c200;}
+.gpslayout .key{ color:#8dad77; margin:10px 0 5px 10px; font-weight:normal;}
+.gpslayout .commonul{ background-color:#fff; border-top:solid 1px #ccc; border-bottom:solid 1px #ccc;}
+.gpslayout .commonul li a{border:solid 1px #fff;border-radius:3px; text-align:center; }
+.gpslayout .commonul li.active a{ background-color:#fff; color:#fff; border-color:#51c200; color:#51c200;}
+
+.shadow_bg{background-color:rgba(227,233,222,.4); height:100%; width:100%; position:absolute; left:0; top:0; z-index:3008; display:none;}
+.gpstips{ width:224px; height:88px;position:fixed; top:50%; left:50%; margin-top:-41px; margin-left:-105px; z-index:3009; font-size:14px;
+          background:url("../images/cloud_bg.png") no-repeat; background-size:100% 100%; display:none; padding:44px 0; color:#888; text-align:center;}
+.gpstips a{ color:#888;}
+.icon{display:inline-block; vertical-align:middle;background-size:100% 100%; }
+.icon_gps{ background-image:url("../images/icon_gps.png"); width:14px; height:18px; margin-right:3px;}
+.icon_arrowright{background-image:url("../images/arrow_right.png"); width:8px; height:12px;}
+
+#selectedCityName,#yt_type label{ color:#51c200; }
+#yt_type{ padding:20px 15px 5px;}
+#spYD{ margin-bottom:30px; display:block;}
+#yt_type div{ padding-left:18px;}
+#yt_type input[type="radio"]{ margin:-4px 0 0;}
